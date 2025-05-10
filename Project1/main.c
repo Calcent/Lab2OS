@@ -7,7 +7,7 @@
 #define NUM_CHILDREN 10
 
 const char* commands[NUM_CHILDREN][4] = {
-    {"echo", "Hello + Isaac Darlington", NULL},     // Unique task
+    {"echo", "Hello + Cal", NULL},
     {"ls", "-l", NULL},
     {"date", NULL},
     {"whoami", NULL},
@@ -26,14 +26,14 @@ int main() {
     for (int i = 0; i < NUM_CHILDREN; i++) {
         pid_t pid = fork();
         if (pid == 0) {
-            // Child process
+            //Child process
             printf("[Child %d] PID: %d executing: %s\n", i, getpid(), commands[i][0]);
             execvp(commands[i][0], (char* const*)commands[i]);
             perror("execvp failed");
             exit(EXIT_FAILURE);
         }
         else if (pid > 0) {
-            // Parent process
+            //Parent process
             pids[i] = pid;
         }
         else {
@@ -42,7 +42,7 @@ int main() {
         }
     }
 
-    // Wait for each child and report
+    //Wait for each child and report
     for (int i = 0; i < NUM_CHILDREN; i++) {
         pid_t wpid = waitpid(pids[i], &status, 0);
         if (WIFEXITED(status)) {
